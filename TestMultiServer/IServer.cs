@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using Game.Common;
+using Common;
 
-namespace TestMultiServer
+namespace GenericTcpServer
 {
 	public interface IServer
 	{

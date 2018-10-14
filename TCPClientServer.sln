@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMultiServer", "TestMultiServer\TestMultiServer.csproj", "{B54BCE70-D0D0-4A99-B282-34276715AF34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestServer", "TestMultiServer\TestServer.csproj", "{B54BCE70-D0D0-4A99-B282-34276715AF34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Common", "Game.Common\Game.Common.csproj", "{9BD43CEC-B21D-465D-A22E-C55FC147303D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Game.Common\Common.csproj", "{9BD43CEC-B21D-465D-A22E-C55FC147303D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{6E0691DE-BF3D-497B-9E90-9E295A3F35B4}"
 EndProject

@@ -1,8 +1,6 @@
 using Newtonsoft.Json;
-using System;
-using System.Net.Sockets;
 
-namespace Game.Common
+namespace Common
 {
 
 	public class Packet : JsonMessage, IPacket
@@ -21,13 +19,14 @@ namespace Game.Common
 
 	public class JsonMessage : IJsonSerializable
 	{
-		
+
 		public string ToJson()
 		{
-			return JsonConvert.SerializeObject(this, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+			return JsonConvert.SerializeObject(this, Formatting.None,
+				new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
 		}
 
 	}
-	
+
 }
 

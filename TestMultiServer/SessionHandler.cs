@@ -3,10 +3,10 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using Game.Common;
+using Common;
 using Newtonsoft.Json;
 
-namespace TestMultiServer
+namespace GenericTcpServer
 {
 	public class SessionHandler : ISessionHandler
 	{

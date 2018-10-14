@@ -7,8 +7,8 @@
     <ProjectGuid>{B54BCE70-D0D0-4A99-B282-34276715AF34}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestMultiServer</RootNamespace>
-    <AssemblyName>TestMultiServer</AssemblyName>
+    <RootNamespace>GenericTcpServer</RootNamespace>
+    <AssemblyName>GenericTcpServer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,7 +51,6 @@
     <Compile Include="ISessionHandler.cs" />
     <Compile Include="ServerSatusData.cs" />
     <Compile Include="ServerStatusPacket.cs" />
-    <Compile Include="SessionEndedEventHandler.cs" />
     <Compile Include="MessageEventArgs.cs" />
     <Compile Include="SessionHandler.cs" />
     <Compile Include="PacketEventHandler.cs" />
@@ -64,9 +63,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Game.Common\Game.Common.csproj">
+    <ProjectReference Include="..\Game.Common\Common.csproj">
       <Project>{9bd43cec-b21d-465d-a22e-c55fc147303d}</Project>
-      <Name>Game.Common</Name>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

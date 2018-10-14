@@ -1,7 +1,6 @@
 using System;
-using Newtonsoft.Json;
 
-namespace Game.Common
+namespace Common
 {
 	public sealed class MessagePacket : JsonMessage, IPacket
 	{

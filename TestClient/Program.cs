@@ -5,13 +5,13 @@ namespace TestClient
 {
 	public class Program
 	{
-		public static TcpGamesClient gamesClient;
+		public static GenericTcpClient Client;
 
 		public static void InterruptHandler(object sender, ConsoleCancelEventArgs args)
 		{
 			// Perform a graceful disconnect
 			args.Cancel = true;
-			gamesClient?.Disconnect();
+			Client?.Disconnect();
 		}
 
 		public static void Main(string[] args)
@@ -19,14 +19,14 @@ namespace TestClient
 			// Setup the Games Client
 			string host = "192.168.1.29"; //args[0].Trim();
 			int port = 8888; //int.Parse(args[1].Trim());
-			gamesClient = new TcpGamesClient(host, port);
+			Client = new GenericTcpClient(host, port);
 
 			// Add a handler for a Ctrl-C press
 			Console.CancelKeyPress += InterruptHandler;
 
 			// Try to connecct & interact with the server
-			gamesClient.Connect();
-			gamesClient.Run();
+			Client.Connect();
+			Client.Run();
 			Thread.Sleep(2000);
 		}
 	}

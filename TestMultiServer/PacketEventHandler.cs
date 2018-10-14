@@ -1,11 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TestMultiServer
+namespace GenericTcpServer
 {
 	public delegate void PacketEventHandler(object sender, MessageEventArgs e);
-	
-	
 }

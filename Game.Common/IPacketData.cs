@@ -1,7 +1,4 @@
-using Newtonsoft.Json;
-using System;
-
-namespace Game.Common
+namespace Common
 {
 	public interface IPacketData  : IJsonSerializable
 	{

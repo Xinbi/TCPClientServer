@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Game.Common;
-using Newtonsoft.Json;
+using Common;
 
-namespace TestMultiServer
+namespace GenericTcpServer
 {
 
 	public sealed class ServerStatusPacket : JsonMessage, IPacket

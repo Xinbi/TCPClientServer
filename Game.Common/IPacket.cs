@@ -1,6 +1,4 @@
-using System;
-
-namespace Game.Common
+namespace Common
 {
 	public interface IPacket : IJsonSerializable
 	{

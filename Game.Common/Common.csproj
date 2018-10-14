@@ -7,8 +7,8 @@
     <ProjectGuid>{9BD43CEC-B21D-465D-A22E-C55FC147303D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Game.Common</RootNamespace>
-    <AssemblyName>Game.Common</AssemblyName>
+    <RootNamespace>Common</RootNamespace>
+    <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="IJsonSerializable.cs" />
     <Compile Include="IPacket.cs" />
     <Compile Include="MessageData.cs" />
