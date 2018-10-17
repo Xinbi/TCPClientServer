@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Common;
+using Common.Packets;
 
 namespace GenericTcpServer
 {
@@ -35,18 +36,18 @@ namespace GenericTcpServer
 			_serverSocket.Start();
 			_running = true;
 			Console.WriteLine(" >> " + "Server Started");
-			new Thread(this.Ping).Start();
+			new Thread(this.PingAllSessions).Start();
 			while (_running)
 			{
 				try
 				{
 					if (!_serverSocket.Pending())
 					{
-						Thread.Sleep(10);
+						Thread.Sleep(100);
 					}
 					else
 					{
-						_handleNewConnection().GetAwaiter().GetResult();
+						new Thread(_handleNewConnection).Start();
 					}
 				}
 				catch (Exception ex)
@@ -77,15 +78,16 @@ namespace GenericTcpServer
 
 		public IPacket GetStatus()
 		{
-			return new ServerStatusPacket(new ServerSatusData()
+			return new ServerStatusPacket(new ServerStatusData()
 			{
+                IpAddress =  this.IpAddress.ToString(),
 				ActiveConnections = this.ActiveSessions,
 				Port = this.Port,
 				Status = "Running."
 			});
 		}
 
-		private void Ping()
+		private void PingAllSessions()
 		{
 			while (_running)
 			{
@@ -96,10 +98,14 @@ namespace GenericTcpServer
 					List<ISessionHandler> handlers = _sessionHandlers.Values.ToList();
 					foreach (var handler in handlers)
 					{
-						handler.Ping().GetAwaiter().GetResult();
+					    var result = handler.Ping().GetAwaiter().GetResult();
+					    if (result.Data.Equals(Result.Disconnected))
+					    {
+					        handler.Stop();
+					    }
 					}
 				}
-				Thread.Sleep(5000);
+				Thread.Sleep(1000);
 			}
 		}
 
@@ -117,12 +123,12 @@ namespace GenericTcpServer
 		}
 
 		// Awaits for a new connection and then adds them to the waiting lobby
-		private async Task _handleNewConnection()
+		private void _handleNewConnection()
 		{
 			try
 			{
 				string sessionId = Guid.NewGuid().ToString("N");
-				TcpClient newClient = await _serverSocket.AcceptTcpClientAsync();
+				TcpClient newClient = _serverSocket.AcceptTcpClient();
 				var handler = new SessionHandler(newClient, sessionId);
 				handler.PacketReceivedEvent += (sender, e) => Console.WriteLine($"Received:{e.Message.ToJson()}");
 				handler.PacketSentEvent += (sender, e) => Console.WriteLine($"Sent:{e.Message.ToJson()}");

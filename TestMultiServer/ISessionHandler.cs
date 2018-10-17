@@ -1,6 +1,7 @@
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Common;
+using Common.Packets;
 
 namespace GenericTcpServer
 {
@@ -14,6 +15,7 @@ namespace GenericTcpServer
 		void Stop();
 		Task Send(IPacket message);
 		Task<IPacket> ReceivePacket(TcpClient client);
-		Task Ping();
-	}
+		Task<ResponsePacket> Ping();
+	    Task<ResponsePacket> Ping(long timeout);
+    }
 }

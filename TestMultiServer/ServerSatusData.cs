@@ -6,14 +6,12 @@ using Newtonsoft.Json;
 
 namespace GenericTcpServer
 {
-	public class ServerSatusData : IPacketData
+	public class ServerStatusData 
 	{
+        public string IpAddress { get; set; }
 		public int Port { get; set; }
 		public int ActiveConnections { get; set; }
 		public string Status { get; set; }
-		public string ToJson()
-		{
-			return JsonConvert.SerializeObject(this);
-		}
+
 	}
 }

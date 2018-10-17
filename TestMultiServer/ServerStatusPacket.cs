@@ -1,11 +1,12 @@
 using Common;
+using Common.Packets;
 
 namespace GenericTcpServer
 {
 
-	public sealed class ServerStatusPacket : JsonMessage, IPacket
+	public sealed class ServerStatusPacket : JsonMessage, IPacket<ServerStatusData>
 	{
-		public ServerStatusPacket(ServerSatusData statusData)
+		public ServerStatusPacket(ServerStatusData statusData)
 		{
 			this.Command = "serverStatus";
 			Data = statusData;
@@ -13,11 +14,7 @@ namespace GenericTcpServer
 
 		public string SessionId { get; set; }
 		public string Command { get; set; }
-		IPacketData IPacket.Data
-		{
-			get { return this.Data;}
-			set { this.Data = (ServerSatusData)value; }
-		}
-		public ServerSatusData Data { get; set; }
+
+		public ServerStatusData Data { get; set; }
 	}
 }

@@ -1,11 +1,11 @@
 using System;
-using Common;
+using Common.Packets;
 
 namespace GenericTcpServer
 {
 	public class MessageEventArgs : EventArgs
 	{
-		public string SessionID { get; set; }
+		public string SessionId { get; set; }
 		public IPacket Message { get; set; }
 	}
 }

@@ -17,7 +17,7 @@ namespace TestClient
 		public static void Main(string[] args)
 		{
 			// Setup the Games Client
-			string host = "192.168.1.29"; //args[0].Trim();
+			string host = "53.220.84.72"; //args[0].Trim();
 			int port = 8888; //int.Parse(args[1].Trim());
 			Client = new GenericTcpClient(host, port);
 

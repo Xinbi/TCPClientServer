@@ -1,5 +1,6 @@
 using System.Net;
 using Common;
+using Common.Packets;
 
 namespace GenericTcpServer
 {

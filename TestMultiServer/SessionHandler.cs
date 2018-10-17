@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Common;
+using Common.Packets;
 using Newtonsoft.Json;
 
 namespace GenericTcpServer
@@ -149,41 +151,47 @@ namespace GenericTcpServer
 		protected virtual void OnMessageSentEvent(IPacket msg)
 		{
 			var handler = PacketSentEvent;
-			handler?.Invoke(this, new MessageEventArgs() { Message = msg, SessionID = this.SessionNumber });
+			handler?.Invoke(this, new MessageEventArgs() { Message = msg, SessionId = this.SessionNumber });
 		}
 
 		protected virtual void OnMessageReceivedEvent(IPacket msg)
 		{
 			var handler = PacketReceivedEvent;
-			handler?.Invoke(this, new MessageEventArgs() { Message = msg, SessionID = this.SessionNumber });
+			handler?.Invoke(this, new MessageEventArgs() { Message = msg, SessionId = this.SessionNumber });
 		}
 
-		public async Task Ping()
-		{
-			var connected = false;
-			if (!_isConnected(_client))
-			{
-				_running = false;
-				return;
-			}
+	    public async Task<ResponsePacket> Ping()
+	    {
+	        return await Ping(5000);
+	    }
 
-			PacketEventHandler handler = (sender, e) =>
-						{
-							if (e.Message.Command == "pong")
-							{
-								connected = true;
-							}
-						};
-			this.PacketReceivedEvent += handler;
-				await Send(new Packet() {Command = "ping"});
-			Thread.Sleep(5000);
-			this.PacketReceivedEvent -= handler;
-			if (!connected)
-				_running = false;
-		}
+	    public async Task<ResponsePacket> Ping(long timeout)
+	    {
+	        var connected = false;
+	        if (!_isConnected(_client))
+	        {
+	            return new ResponsePacket() {Data =  Result.Disconnected};
+	        }
+
+	        PacketEventHandler handler = (sender, e) =>
+	        {
+	            if (e.Message.Command == "pong")
+	            {
+	                connected = true;
+                }
+            };
+
+	        this.PacketReceivedEvent += handler;
+	        await Send(new PingPacket());
+            var timeoutWatch = Stopwatch.StartNew();
+
+	        SpinWait.SpinUntil(()=> connected || timeoutWatch.ElapsedMilliseconds >= timeout);
+	        this.PacketReceivedEvent -= handler;
+	        return !connected ? new ResponsePacket() { Data = Result.Disconnected } : new ResponsePacket() { Data = Result.Success };
+	    }
 
 
-		// Checks if a client has disconnected ungracefully
+	    // Checks if a client has disconnected ungracefully
 		// Adapted from: http://stackoverflow.com/questions/722240/instantly-detect-client-disconnection-from-server-socket
 		private static bool _isConnected(TcpClient client)
 		{

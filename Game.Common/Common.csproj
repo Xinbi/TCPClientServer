@@ -45,13 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IJsonSerializable.cs" />
-    <Compile Include="IPacket.cs" />
-    <Compile Include="MessageData.cs" />
-    <Compile Include="MessagePacket.cs" />
-    <Compile Include="Packet.cs" />
-    <Compile Include="IPacketData.cs" />
-    <Compile Include="PacketData.cs" />
+    <Compile Include="Packets\IPacket.cs" />
+    <Compile Include="Packets\JsonMessage.cs" />
+    <Compile Include="Packets\MessageData.cs" />
+    <Compile Include="Packets\MessagePacket.cs" />
+    <Compile Include="Packets\Packet.cs" />
+    <Compile Include="Packets\PingPacket.cs" />
+    <Compile Include="Packets\ResponsePacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Packets\Result.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

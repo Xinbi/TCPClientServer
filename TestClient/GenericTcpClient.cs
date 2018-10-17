@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Common;
+using Common.Packets;
 using Newtonsoft.Json;
 
 namespace TestClient
@@ -158,7 +159,7 @@ namespace TestClient
 		{
 			try
 			{
-				// Check for new incomding messages
+				// Check for new incoming messages
 				if (_client.Available > 0)
 				{
 					// There must be some incoming data, the first two bytes are the size of the Packet
@@ -210,7 +211,7 @@ namespace TestClient
 		{
 			// Print the message
 			Console.WriteLine("The server is disconnecting us with this message:");
-			Console.WriteLine(message.Data.ToJson());
+			Console.WriteLine(message.ToJson());
 
 			// Will start the disconnection process in Run()
 			Running = false;
