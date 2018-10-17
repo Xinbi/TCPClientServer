@@ -47,7 +47,7 @@ namespace GenericTcpServer
 					}
 					else
 					{
-						new Thread(_handleNewConnection).Start();
+                        _handleNewConnection().GetAwaiter().GetResult();
 					}
 				}
 				catch (Exception ex)
@@ -123,12 +123,12 @@ namespace GenericTcpServer
 		}
 
 		// Awaits for a new connection and then adds them to the waiting lobby
-		private void _handleNewConnection()
+		private async Task _handleNewConnection()
 		{
 			try
 			{
 				string sessionId = Guid.NewGuid().ToString("N");
-				TcpClient newClient = _serverSocket.AcceptTcpClient();
+				TcpClient newClient = await _serverSocket.AcceptTcpClientAsync();
 				var handler = new SessionHandler(newClient, sessionId);
 				handler.PacketReceivedEvent += (sender, e) => Console.WriteLine($"Received:{e.Message.ToJson()}");
 				handler.PacketSentEvent += (sender, e) => Console.WriteLine($"Sent:{e.Message.ToJson()}");

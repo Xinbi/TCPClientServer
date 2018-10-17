@@ -14,7 +14,7 @@ namespace GenericTcpServer
 	{
 		private readonly TcpClient _client;
 		private bool _running;
-
+	    private readonly Thread _runThread;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SessionHandler"/> class.
 		/// </summary>
@@ -24,7 +24,8 @@ namespace GenericTcpServer
 		{
 			SessionNumber = sessionNumber;
 			this._client = inClientSocket;
-		}
+		    _runThread = new Thread(Run);
+        }
 
 		public string SessionNumber { get; }
 		public event PacketEventHandler PacketSentEvent;
@@ -33,7 +34,7 @@ namespace GenericTcpServer
 		public event SessionStartedEventHandler SessionStartedEvent;
 		public void Start()
 		{
-			Run().GetAwaiter().GetResult();
+			_runThread.Start();
 		}
 
 		public void Stop()
@@ -101,7 +102,7 @@ namespace GenericTcpServer
 			return packet;
 		}
 
-		private async Task Run()
+		private void Run()
 		{
 			OnSessionStartedEvent();
 			_running = true;
@@ -115,7 +116,7 @@ namespace GenericTcpServer
 					}
 
 					Thread.Sleep(10);
-					var packet = await ReceivePacket(_client);
+					var packet = ReceivePacket(_client).GetAwaiter().GetResult();
 					if (packet == null)
 						continue;
 					if (packet.SessionId != SessionNumber)
